@@ -8,3 +8,4 @@ image_proportional
 fft_mpi
 fft_serial
 img_gen
+*.pgm

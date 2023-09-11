@@ -319,6 +319,8 @@ int main(int argc, char** argv) {
 
 
     if(rank == 0){
+
+        // Divide by the number of elements
         for(int i=0; i<len_info[0]*len_info[1]; i++){
             v_send[i] /= (double)(len_info[0]*len_info[1]);
         }

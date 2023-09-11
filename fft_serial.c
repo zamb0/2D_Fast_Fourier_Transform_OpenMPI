@@ -222,6 +222,7 @@ int main(int argc, char** argv){
         cooley_tukey_fft(v_data + i*padded.width, padded.width, 1);
     }
 
+    // Divide by the number of pixels   
     for(int i=0; i < padded.width*padded.height; i++){
         v_data[i] /= (padded.height*padded.width);
     }
