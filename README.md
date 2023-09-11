@@ -1,3 +1,6 @@
+![C](https://img.shields.io/badge/C-red)
+![OpenMPI](https://img.shields.io/badge/OpenMPI-blue)
+
 # 2D Fast Fourier Transform (FFT) OpenMPI Implementation
 
 This repository contains the code for the Advanced Computer Architecture project (2022/2023).
@@ -54,7 +57,7 @@ Then, to generate an image, run the following command:
 ./img_gen [outputFile] [width] [height] [pgmType] [maxValue]
 ```
 
-where ```outputFile``` is the name of the file where the image will be saved, ```width``` is the width of the image, ```height``` is the height of the image, ```pgmType``` is the type of pgm image (e.i. P2 is the one allowed to be used in our project), ```maxValue``` is the maximum value of the pixels in the image.
+where ```outputFile``` is the name of the file where the image will be saved, ```width``` is the width of the image, ```height``` is the height of the image, ```pgmType``` is the type of pgm image (i.e. P2 is the one allowed to be used in our project), ```maxValue``` is the maximum value of the pixels in the image.
 
 ### 4 - Run the Program
 
