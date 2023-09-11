@@ -1,0 +1,10 @@
+.DS_store
+
+#folders
+image_sample
+image_proportional
+
+#files
+fft_mpi
+fft_serial
+img_gen
