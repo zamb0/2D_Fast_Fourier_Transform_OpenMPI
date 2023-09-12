@@ -1,4 +1,4 @@
-![C-Language](https://img.shields.io/badge/C-red)
+![C-Language](https://img.shields.io/badge/C%20Language-red)
 ![OpenMPI](https://img.shields.io/badge/OpenMPI-blue)
 
 # 2D Fast Fourier Transform (FFT) OpenMPI Implementation
