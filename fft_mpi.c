@@ -170,7 +170,7 @@ int main(int argc, char** argv) {
     pgm_t padded;
     cplx *v_send;
     cplx *v_revc;
-    int len_info[4];
+    int len_info[3];
 
     if(rank == 0){
 
@@ -197,7 +197,7 @@ int main(int argc, char** argv) {
         v_send = mat2vet(padded.data, padded.width, padded.height);
 
     }
-    
+
     // Broadcast the usefull length information
     MPI_Bcast(len_info, 3, MPI_INT, 0, MPI_COMM_WORLD);
 

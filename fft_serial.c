@@ -186,6 +186,7 @@ int main(int argc, char** argv){
     for(int i=0; i < padded.height; i++){
         cooley_tukey_fft(v_data + i*padded.width, padded.width, 0);
     }
+    //
 
     // Transpose vector
     v_data = transpose(v_data, padded.width, padded.height);

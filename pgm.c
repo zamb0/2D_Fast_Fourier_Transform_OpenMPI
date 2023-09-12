@@ -30,6 +30,11 @@ void pgm_write(pgm_t img, char *fabs, char *farg){
         fpabs = fopen(fabs, "wb");
         fparg = fopen(farg, "wb");
 
+        if(fpabs == NULL || fparg == NULL){
+            printf("Error opening file\n");
+            exit(1);
+        }
+
         //printf("writing header\n");
 
         fprintf(fpabs, "%s\n", img.type);
@@ -64,6 +69,11 @@ void pgm_write(pgm_t img, char *fabs, char *farg){
         FILE *fpabs;
 
         fpabs = fopen(fabs, "wb");
+
+        if(fpabs == NULL){
+            printf("Error opening file\n");
+            exit(1);
+        }
 
         //printf("writing header\n");
 
@@ -101,6 +111,12 @@ void pgm_write_fft(pgm_t img, char *fabs, char *farg){
 
         fpabs = fopen(fabs, "wb");
         fparg = fopen(farg, "wb");
+
+        if (fpabs == NULL || fparg == NULL)
+        {
+            printf("Error opening file\n");
+            exit(1);
+        }
 
         fprintf(fpabs, "%s\n", img.type);
         fprintf(fparg, "%s\n", img.type);
@@ -141,6 +157,11 @@ void pgm_write_fft(pgm_t img, char *fabs, char *farg){
         FILE *fpabs;
 
         fpabs = fopen(fabs, "wb");
+
+        if(fpabs == NULL){
+            printf("Error opening file\n");
+            exit(1);
+        }
 
         fprintf(fpabs, "%s\n", img.type);
 
@@ -181,6 +202,11 @@ pgm_t pgm_read(char *filename){
     pgm_t img;
 
     fp = fopen(filename, "rb");
+
+    if(fp == NULL){
+        printf("Error opening file\n");
+        exit(1);
+    }
 
     char buff[2048];
     int tmp;

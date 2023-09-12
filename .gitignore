@@ -9,3 +9,4 @@ fft_mpi
 fft_serial
 img_gen
 *.pgm
+*.trace
