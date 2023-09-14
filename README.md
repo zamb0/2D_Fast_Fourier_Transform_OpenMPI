@@ -8,7 +8,7 @@ This repository contains the code for the Advanced Computer Architecture project
 ## Aim of the Project
 
 The aim of the project is to implement a 2D Fast Fourier Transform (FFT) algorithm using OpenMPI. The algorithm is implemented in C and it is based on the Cooley-Tukey iterative algorithm. The algorithm is implemented in two versions: a serial version and a parallel version. The parallel version is implemented using OpenMPI.
-The input of the algorithm is a 2D PGM image and the output is the 2D FFT of the image and the original 2D image.
+The input of the algorithm is a 2D PGM image and the output is the 2D FFT of the image and the 2D iFFT image.
 
 ## Execution Instructions
 
