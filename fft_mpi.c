@@ -228,7 +228,7 @@ int main(int argc, char** argv) {
 
     // Allocate memory for the received vector 
     v_revc = (cplx*)malloc(my_num_rows * len_info[0] * sizeof(cplx));
-    
+
     // Scatter the data
     MPI_Scatterv(v_send, recvcounts, displacements, MPI_C_DOUBLE_COMPLEX, v_revc, my_num_rows * len_info[0], MPI_C_DOUBLE_COMPLEX, 0, MPI_COMM_WORLD);
     
@@ -246,9 +246,6 @@ int main(int argc, char** argv) {
         // Transpose
         v_send = transpose(v_send, len_info[0], len_info[1]);
 
-        MPI_Barrier(MPI_COMM_WORLD);
-    }else{
-        MPI_Barrier(MPI_COMM_WORLD);
     }
 
     // Scatter the data
@@ -276,9 +273,6 @@ int main(int argc, char** argv) {
         
         // Write FFT image
         pgm_write_fft(fft, "fft.pgm", "");
-        MPI_Barrier(MPI_COMM_WORLD);
-    }else{
-        MPI_Barrier(MPI_COMM_WORLD);
     }
 
     // Scatter the data
@@ -297,9 +291,7 @@ int main(int argc, char** argv) {
     if(rank == 0){
         // Transpose
         v_send = transpose(v_send, len_info[0], len_info[1]);
-        MPI_Barrier(MPI_COMM_WORLD);
-    }else{
-        MPI_Barrier(MPI_COMM_WORLD);
+       
     }
 
     // Scatter the data

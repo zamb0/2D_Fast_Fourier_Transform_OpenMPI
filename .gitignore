@@ -3,6 +3,7 @@
 #folders
 image_sample
 image_proportional
+profiler
 
 #files
 fft_mpi
