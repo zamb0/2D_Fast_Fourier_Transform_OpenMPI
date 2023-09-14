@@ -48,7 +48,7 @@ also in this case you need to compile using all the .c files in the folder but `
 If you do not have images to run the 2D FFT algorithm on, you can compile the ```img_generator.c``` to generate sample images of your choice. To compile the image generator, run the following command:
 
 ```bash
-gcc -Wall -o img_gen img_generator.c
+gcc -Wall -o img_gen img_generator.c pgm.c
 ```
 
 Then, to generate an image, run the following command:
