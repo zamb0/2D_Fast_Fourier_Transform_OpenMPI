@@ -161,87 +161,81 @@ int main(int argc, char** argv){
     int start = clock();
 
     pgm_t img;
-    pgm_t padded;
     cplx* v_data;
+    int o_width, o_height;
 
     // Read image
     img = pgm_read(argv[1]);
 
+    o_height = img.height;
+    o_width = img.width;
+
     // Check if padding is needed
     if(!is_power_of_two(img.width*img.height) || img.width != img.height){
-        padded = zeroPadding(img);
-    }else{
-        padded.width = img.width;
-        padded.height = img.height;
-        padded.max = img.max;
-        strcpy(padded.type, img.type);
-        padded.data = img.data;
+        img = zeroPadding(img);
     }
 
     // Convert image to vector
-    v_data = mat2vet(padded.data, padded.width, padded.height);
+    v_data = mat2vet(img.data, img.width, img.height);
 
     //################# START 2D FFT #################
     // Perform 1D FFT
-    for(int i=0; i < padded.height; i++){
-        cooley_tukey_fft(v_data + i*padded.width, padded.width, 0);
+    for(int i=0; i < img.height; i++){
+        cooley_tukey_fft(v_data + i*img.width, img.width, 0);
     }
     //
 
     // Transpose vector
-    v_data = transpose(v_data, padded.width, padded.height);
+    v_data = transpose(v_data, img.width, img.height);
 
     // Perform 1D FFT
-    for(int i=0; i < padded.height; i++){
-        cooley_tukey_fft(v_data + i*padded.width, padded.width, 0);
+    for(int i=0; i < img.height; i++){
+        cooley_tukey_fft(v_data + i*img.width, img.width, 0);
     }
     //################# END 2D FFT #################
 
     // Print the FFT image
-    pgm_t fft;
-    fft.data = vet2mat(fftshift(v_data, padded.width, padded.height), padded.width, padded.height);
-    fft.width = padded.width;
-    fft.height = padded.height;
-    fft.max = padded.max;
-    strcpy(fft.type, padded.type);
+    img.data = vet2mat(fftshift(v_data, img.width, img.height), img.width, img.height);
 
     // Write FFT image
-    pgm_write_fft(fft, "fft.pgm", "");
-    free(fft.data);
+    pgm_write_fft(img, "fft.pgm", "");
+
+    v_data = ifftshift(mat2vet(img.data, img.width, img.height), img.width, img.height);
+
 
     //################# START 2D iFFT #################
     // Perform 1D iFFT
-    for(int i=0; i < padded.height; i++){
-        cooley_tukey_fft(v_data + i*padded.width, padded.width, 1);
+    for(int i=0; i < img.height; i++){
+        cooley_tukey_fft(v_data + i*img.width, img.width, 1);
     }
 
     // Transpose vector
-    v_data = transpose(v_data, padded.width, padded.height);
+    v_data = transpose(v_data, img.width, img.height);
 
     // Perform 1D iFFT
-    for(int i=0; i < padded.height; i++){
-        cooley_tukey_fft(v_data + i*padded.width, padded.width, 1);
+    for(int i=0; i < img.height; i++){
+        cooley_tukey_fft(v_data + i*img.width, img.width, 1);
     }
 
     // Divide by the number of pixels   
-    for(int i=0; i < padded.width*padded.height; i++){
-        v_data[i] /= (padded.height*padded.width);
+    for(int i=0; i < img.width*img.height; i++){
+        v_data[i] /= (img.height*img.width);
     }
     //################# END 2D iFFT #################
 
     // Convert vector to matrix
-    padded.data = vet2mat(v_data, padded.width, padded.height);
+    img.data = vet2mat(v_data, img.width, img.height);
 
     free(v_data);
 
-    // Crop image
-    for(int i=0; i<img.height; i++){
-        for(int j=0; j<img.width; j++){
-            img.data[i][j] = padded.data[i][j];
-        }
+    // Realloc
+    img.data = (cplx**)realloc(img.data, o_height * sizeof(cplx*));
+    for (int i = 0; i < o_height; i++) {
+        img.data[i] = (cplx*)realloc(img.data[i], o_width * sizeof(cplx));
     }
 
-    free(padded.data);
+    img.width = o_width;
+    img.height = o_height;
 
     // Write inverse FFT image
     pgm_write(img, "ifft.pgm", "");

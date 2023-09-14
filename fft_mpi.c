@@ -260,17 +260,13 @@ int main(int argc, char** argv) {
 
     if(rank == 0){
         // Print the FFT image
-        pgm_t fft;
-        fft.data = vet2mat(fftshift(v_send, len_info[0], len_info[1]), len_info[0], len_info[1]);
-        fft.width = len_info[0];
-        fft.height = len_info[1];
-        fft.max = len_info[2];
-        strcpy(fft.type, img.type);
+        img.data = vet2mat(fftshift(v_send, len_info[0], len_info[1]), len_info[0], len_info[1]);
         
         // Write FFT image
-        pgm_write_fft(fft, "fft.pgm", "");
+        pgm_write_fft(img, "fft.pgm", "");
 
-        free(fft.data);
+        v_send = ifftshift(mat2vet(img.data, len_info[0], len_info[1]), len_info[0], len_info[1]);
+
     }
 
     // Scatter the data
