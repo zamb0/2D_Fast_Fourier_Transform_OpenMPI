@@ -273,6 +273,8 @@ int main(int argc, char** argv) {
         
         // Write FFT image
         pgm_write_fft(fft, "fft.pgm", "");
+
+        free(fft.data);
     }
 
     // Scatter the data
