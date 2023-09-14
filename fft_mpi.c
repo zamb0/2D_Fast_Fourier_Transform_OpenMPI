@@ -167,39 +167,35 @@ int main(int argc, char** argv) {
     MPI_Comm_size(MPI_COMM_WORLD, &size);
 
     pgm_t img;
-    pgm_t padded;
     cplx *v_send;
     cplx *v_revc;
-    int len_info[3];
+    int len_info[5];
 
     if(rank == 0){
 
         img = pgm_read(argv[1]);
 
+        len_info[3] = img.width;
+        len_info[4] = img.height;
+
         // Check if padding is needed
         if(!is_power_of_two(img.width*img.height) || img.width != img.height){
-            padded = zeroPadding(img);
-        }else{
-            padded.width = img.width;
-            padded.height = img.height;
-            padded.max = img.max;
-            strcpy(padded.type, img.type);
-            padded.data = img.data;
+            img = zeroPadding(img);
         }
-
-        len_info[0] = padded.width;
-        len_info[1] = padded.height;
-        len_info[2] = padded.max;
+       
+        len_info[0] = img.width;
+        len_info[1] = img.height;
+        len_info[2] = img.max;
 
         // Allocate memory for the send vector
-        v_send = (cplx*)malloc(padded.width * padded.height * sizeof(cplx));
+        v_send = (cplx*)malloc(img.width * img.height * sizeof(cplx));
         // Convert image to vector
-        v_send = mat2vet(padded.data, padded.width, padded.height);
+        v_send = mat2vet(img.data, img.width, img.height);
 
     }
 
     // Broadcast the usefull length information
-    MPI_Bcast(len_info, 3, MPI_INT, 0, MPI_COMM_WORLD);
+    MPI_Bcast(len_info, 5, MPI_INT, 0, MPI_COMM_WORLD);
 
     // Find the number of rows per processor
     int rows_per_processor = len_info[1] / size;
@@ -319,18 +315,17 @@ int main(int argc, char** argv) {
             v_send[i] /= (double)(len_info[0]*len_info[1]);
         }
 
-        padded.data = vet2mat(v_send, len_info[0], len_info[1]);
+        img.data = vet2mat(v_send, len_info[0], len_info[1]);
 
         free(v_send);
 
-        // Crop image
-        for(int i=0; i<img.height; i++){
-            for(int j=0; j<img.width; j++){
-                img.data[i][j] = padded.data[i][j];
-            }
+        img.data = realloc(img.data, len_info[4] * sizeof(cplx*));
+        for (int i = 0; i < len_info[4]; i++) {
+            img.data[i] = realloc(img.data[i], len_info[3] * sizeof(cplx));
         }
 
-        free(padded.data);
+        img.width = len_info[3];
+        img.height = len_info[4];
 
         // Write the ifft
         pgm_write(img, "ifft.pgm", "");
