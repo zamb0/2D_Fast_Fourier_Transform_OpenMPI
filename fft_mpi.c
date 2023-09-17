@@ -298,7 +298,7 @@ int main(int argc, char** argv) {
     }
 
     //#################### End 2D FFT ####################
-    //(missing the division by the number of elements)
+    //(missing the division by the number of elements, we will do it after the gather)
 
     // Gather the data
     MPI_Gatherv(v_revc, my_num_rows * len_info[0], MPI_C_DOUBLE_COMPLEX, v_send, recvcounts, displacements, MPI_C_DOUBLE_COMPLEX, 0, MPI_COMM_WORLD);
