@@ -1,7 +1,7 @@
 ![C-Language](https://img.shields.io/badge/C%20Language-red)
 ![OpenMPI](https://img.shields.io/badge/OpenMPI-blue)
 
-# 2D Fast Fourier Transform (FFT) OpenMPI Implementation
+# 2D Fast Fourier Transform (2D FFT) OpenMPI Implementation
 
 This repository contains the code for the Advanced Computer Architecture project (2022/2023).
 
