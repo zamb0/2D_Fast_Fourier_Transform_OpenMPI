@@ -3,6 +3,8 @@
 
 # 2D Fast Fourier Transform (2D FFT) OpenMPI Implementation
 
+![fft_cover](https://github.com/zamb0/2D_Fast_Fourier_Transform_OpenMPI/assets/69969487/5c5e032d-43c7-44fc-8456-6a172bfda06f)
+
 This repository contains the code for the Advanced Computer Architecture project (2022/2023).
 
 ## Aim of the Project
