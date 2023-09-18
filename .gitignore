@@ -4,6 +4,7 @@
 image_sample
 image_proportional
 profiler
+.vscode
 
 #files
 fft_mpi
