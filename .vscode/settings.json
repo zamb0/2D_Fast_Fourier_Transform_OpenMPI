@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "array": "c",
-        "span": "c",
-        "vector": "c",
-        "string": "c",
-        "string_view": "c"
-    }
-}
